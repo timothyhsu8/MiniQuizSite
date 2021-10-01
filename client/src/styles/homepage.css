@@ -1,0 +1,52 @@
+html, body {
+  margin:0px;
+  height:100%;
+}
+.container { 
+    background-color: black;
+  }
+
+.navbar {
+    text-align: right;
+    font-family: monospace;
+    padding-top: 10px; 
+    padding-right: 20px; 
+    font-size: 20px;
+    color: white; 
+}
+
+.alignRight {
+  float: right;
+  
+}
+
+.title {
+  font-family: monospace;
+  font-size: 72px;
+  color: white;
+}
+
+.subtitle1 {
+  font-family: monospace;
+  font-size: 30px;
+  color: white;
+}
+
+.subtitle2 {
+  font-family: monospace;
+  font-size: 24px;
+  color: white;
+}
+
+.quizcards{
+  display: flex;
+  flex-direction: row;
+  gap: 15px;
+}
+
+.cardinfo{
+  color: white;
+  font-family: monospace;
+  text-align: center;
+  line-height: 13px;
+}
