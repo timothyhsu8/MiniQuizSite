@@ -1,17 +1,12 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+import mongoose from 'mongoose';
 
-//Create Schema
-const UserSchema = new Schema({
-  name: {
-    type: String,
-    required: true,
-  },
-  score: {
-    type: Number,
-    required: true,
-    default: 0,
-  },
+const userSchema = mongoose.Schema({
+    name: String,
+    score: Number,
+    createdAt: {
+        type: Date,
+        default: new Date()  
+    },
 });
 
-module.exports = User = mongoose.model('user', UserSchema);
+export default mongoose.model('User', userSchema);

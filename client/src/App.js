@@ -6,6 +6,7 @@ import QuizTakingPage from './pages/QuizTakingPage';
 import TestingPage from './pages/TestingPage';
 import QuizCard from './pages/QuizCard';
 import LoginPage from './pages/LoginPage';
+import UserForm from './pages/UserForm';
 
 function App() {
   return (
@@ -30,6 +31,11 @@ function App() {
           <Route path='/testingpage'>
             <TestingPage />
           </Route>
+
+          <Route path='/userform'>
+            <UserForm />
+          </Route>
+          
         </Switch>
       </Router>
     </ChakraProvider>
