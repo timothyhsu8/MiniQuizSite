@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Box, Center, Text, Grid, VStack, Button, Image } from "@chakra-ui/react"
-import { useLocation } from 'react-router-dom'
+import { useLocation, Link } from 'react-router-dom'
 
 export default function QuizTakingPage( {} ) {
     
@@ -14,9 +14,11 @@ export default function QuizTakingPage( {} ) {
     const [selectedAnswer, setSelectedAnswer] = useState(-1)
     const [numCorrect, setNumCorrect] = useState(0)
 
-    const answerColor = "blue.300"
-    const hoverColor = "blue.200"
-    const selectedColor = "orange.200"
+    const answerColor = "purple.900"
+    const hoverColor = "blue.700"
+    const selectedColor = "yellow.500"
+
+    var quizComplete = false
 
     const nextQuestion = () => {
         if(questionNum !== numQuestions){
@@ -30,27 +32,30 @@ export default function QuizTakingPage( {} ) {
 
     const renderNextQuestionButton = () => {
         if(selectedAnswer === -1)
-            return <Button w="50%" bgColor="gray.300" _hover={{bgColor:"gray.300"}}>Next Question</Button>
+            return <Button fontSize="24" w="450px" h="70px" bgColor="gray.300" _hover={{bgColor:"gray.300"}}>Next Question</Button>
+        
+        else if(questionNum === numQuestions)
+            return <Link w="50%" to="/homepage"> <Button fontSize="24" w="450px" h="70px" bgColor="blue.300" _hover={{bgColor:"green.200"}}>Finish Quiz</Button> </Link>
 
         else 
-            return <Button w="50%" bgColor="green.300" onClick={() => nextQuestion()} _hover={{bgColor:"green.200"}}>Next Question</Button>
+            return <Button fontSize="24" w="450px" h="70px" bgColor="green.300" onClick={() => nextQuestion()} _hover={{bgColor:"green.200"}}>Next Question</Button>
     }
    
     return (
-        <Box bgColor="gray.800" height="100vh">
-            <Text ml="3" fontSize="20" color="gray.100">Correct Answers: {numCorrect}/{numQuestions}</Text>
+        <Box height="100vh">
+            <Text ml="3" fontSize="20" color="gray.700">Correct Answers: {numCorrect}/{numQuestions}</Text>
             <Center>
                 <VStack w="50%">
                     <Box>
-                        <Text fontSize="40" fontWeight="bold" color="gray.100">
+                        <Text fontSize="40" fontWeight="medium" color="gray.700">
                             {questionNum}. {questions[questionNum-1]}
                         </Text>
                     </Box>
-                    <Grid w="100%" templateRows ="1fr 1fr 1fr 1fr 1fr" h="350px">
-                        <Button bgColor={selectedAnswer === 0 ? selectedColor : answerColor} onClick={() => setSelectedAnswer(0)} _hover={{bgColor: selectedAnswer === 0 ? selectedColor : hoverColor }} h="50">{answers[questionNum-1][0]}</Button>
-                        <Button bgColor={selectedAnswer === 1 ? selectedColor : answerColor} onClick={() => setSelectedAnswer(1)} _hover={{bgColor: selectedAnswer === 1 ? selectedColor : hoverColor}} h="50">{answers[questionNum-1][1]}</Button>
-                        <Button bgColor={selectedAnswer === 2 ? selectedColor : answerColor} onClick={() => setSelectedAnswer(2)} _hover={{bgColor: selectedAnswer === 2 ? selectedColor : hoverColor}} h="50">{answers[questionNum-1][2]}</Button>
-                        <Button bgColor={selectedAnswer === 3 ? selectedColor : answerColor} onClick={() => setSelectedAnswer(3)} _hover={{bgColor: selectedAnswer === 3 ? selectedColor : hoverColor}} h="50">{answers[questionNum-1][3]}</Button>
+                    <Grid w="100%" templateRows ="1fr 1fr 1fr 1fr 1fr" h="600px">
+                        <Button color="white" fontSize="30" bgColor={selectedAnswer === 0 ? selectedColor : answerColor} onClick={() => setSelectedAnswer(0)} _hover={{bgColor: selectedAnswer === 0 ? selectedColor : hoverColor }} h="100">{answers[questionNum-1][0]}</Button>
+                        <Button color="white" fontSize="30" bgColor={selectedAnswer === 1 ? selectedColor : answerColor} onClick={() => setSelectedAnswer(1)} _hover={{bgColor: selectedAnswer === 1 ? selectedColor : hoverColor}} h="100">{answers[questionNum-1][1]}</Button>
+                        <Button color="white" fontSize="30" bgColor={selectedAnswer === 2 ? selectedColor : answerColor} onClick={() => setSelectedAnswer(2)} _hover={{bgColor: selectedAnswer === 2 ? selectedColor : hoverColor}} h="100">{answers[questionNum-1][2]}</Button>
+                        <Button color="white" fontSize="30" bgColor={selectedAnswer === 3 ? selectedColor : answerColor} onClick={() => setSelectedAnswer(3)} _hover={{bgColor: selectedAnswer === 3 ? selectedColor : hoverColor}} h="100">{answers[questionNum-1][3]}</Button>
                         <Center>{renderNextQuestionButton()}</Center>
                     </Grid>
                 </VStack>

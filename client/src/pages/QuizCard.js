@@ -5,13 +5,13 @@ import test from '../images/App.png';
 import '../styles/homepage.css';
 
 function QuizCard(props) {
-    return ( 
-        <Box w='300px' h='180px' rounded='10px' overflow='hidden' boxShadow='large' bg='gray.600' _hover={{opacity:"80%"}}>
-            <Image src={props.image} h='160px' w='300px'></Image>
-            <Box p={1} className='cardinfo'>
-                <p1>{props.title}</p1>
+    return (
+        <VStack spacing="0">
+            <Box w='300px' h='180px' borderRadius="15" _hover={{opacity:"80%"}}>
+                <Image borderRadius="10" src={props.image} h='160px' w='300px'></Image>
             </Box>
-        </Box>
+            <Text fontSize="22">{props.title}</Text>
+        </VStack>
     )
 }
 

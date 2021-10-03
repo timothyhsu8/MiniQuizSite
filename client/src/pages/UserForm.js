@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useState } from 'react';
-import { Button } from "@chakra-ui/react"
+import { Button, Box, Center, VStack, Text, Input, Flex } from "@chakra-ui/react"
+import { Link } from 'react-router-dom'
 
 function UserForm() {
     const url = 'http://localhost:5000/posts';
@@ -9,15 +10,26 @@ function UserForm() {
     const createUser = (newUser) => {axios.post(url, newUser)}
     const getUser = () => {axios.get(url)}
 
+    const submitted = (newUser) => {
+      axios.post(url, newUser)  // Add new user to the database
+    }
 
   return (
-  <div>
-        <Button onClick={() => console.log(getUser)}>GET STUFF</Button>
-        <label>Username: </label>
-        <input type="text" title="title" onChange={(e) => setUserData({...userData, name: e.target.value })} required></input>
-        <br /> <br />
-        <Button type="submit" onClick={() => createUser(userData)}>Submit</Button>
-  </div>
+    <Box>
+      <Center>
+        <Flex height="90vh" alignItems="center" justifyContent="center">
+          <VStack>
+            <Text fontSize="40" fontWeight="thin">Enter Your Username</Text>
+            <Input type="text" placeholder="User123" borderColor="gray.400" onChange={(e) => setUserData({...userData, name: e.target.value })} required></Input>
+            <Link to={{pathname: "/homepage"}}>
+              <Button color="white" backgroundColor="blue.500" type="submit" onClick={() => createUser(userData)}
+              _hover={{bgColor:"blue.300"}}>Submit</Button>
+            </Link>
+            {/* <Button onClick={() => console.log(getUser)}>GET STUFF</Button> */}
+          </VStack>
+        </Flex>
+      </Center>
+    </Box>
   );
 }
 
