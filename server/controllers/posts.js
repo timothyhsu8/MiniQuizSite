@@ -2,12 +2,18 @@ import express from 'express';
 import mongoose from 'mongoose';
 import User from '../models/user.js'
 
-export const getUsers = async (req, res) => {
+export const getUsers = (req, res) => {
     try {
-        console.log("Attempted Get")
-        const user = User.find();
+        User.find({}, function(err, users) {
+            var userMap = {};
+        
+            users.forEach(function(user) {
+              userMap[user._id] = user;
+            });
 
-        res.status(200).json(user);
+            console.log(userMap)
+            res.send(userMap);  
+          });
     } catch (error) {
         res.status(404).json({ message: error.message })
     }

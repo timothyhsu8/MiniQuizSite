@@ -1,56 +1,66 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom'
-import { Box, Center, Text, VStack, Grid, Divider } from '@chakra-ui/react';
+import { Box, Center, Text, VStack, Grid, Divider, Button } from '@chakra-ui/react';
 import QuizCard from "../pages/QuizCard"
 import { quizData } from '../quizData'
-
+import axios from 'axios'
 import '../styles/homepage.css';
 
 import quiz1image from '../images/planets.jpeg'
 import quiz2image from '../images/spacejam.png'
 
-var pulledData = false;
-
-var quiz1title = "Super Mario 64";
-var quiz2title = "Not Super Mario 64";
-
-const renderLeaderboard = () => {
-  let leaderboard = [
-    <Box w="500px">
-        <Grid templateColumns="1fr 1fr">
-          <Text textAlign="center" fontWeight="bold">User</Text>
-          <Text textAlign="center" fontWeight="bold">Score</Text>
-        </Grid>
-          <Box w="90" h="0.2" bgColor="gray.500" />
-      </Box>
-  ]
-  let allUsers = ["MarioGamer200", "Tree", "Loller", "Aem", "Artoks"]
-  let allScores = [100, 200, 300, 400, 1, 200, 300]
-  
-
-
-  for(let i = 0 ; i < allUsers.length ; i++)
-    leaderboard.push(
-      <Box w="500px">
-        <Grid templateColumns="1fr 1fr">
-          <Text textAlign="center">{allUsers[i]}</Text>
-          <Text textAlign="center">{allScores[i]}</Text> 
-        </Grid>
-      </Box>)
-
-  return <VStack>
-    {leaderboard}
-  </VStack>
-}
-
 export default function Homepage() {
 
-  if (!pulledData) {
-    fetch('/api/quizs')
-      .then((res) => res.json())
-      .then((data) => console.log(data));
-    pulledData = true;
+  const [allUsers, setAllUsers] = useState();
+
+  var pulledData = false;
+  var quiz1title = "Entertainment";
+  var quiz2title = "Animals";
+
+  const url = 'http://localhost:5000/users/create';
+
+  const renderLeaderboard = () => {
+    let leaderboard = [
+      <Box w="500px">
+          <Grid templateColumns="1fr 1fr">
+            <Text textAlign="center" fontWeight="bold">User</Text>
+            <Text textAlign="center" fontWeight="bold">Score</Text>
+          </Grid>
+            <Box w="90" h="0.2" bgColor="gray.500" />
+        </Box>
+    ]
+    let allUsers = ["MarioGamer200", "Tree", "Loller", "Aem", "Artoks"]
+    let allScores = [100, 200, 300, 400, 1, 200, 300]
+    
+    for(let i = 0 ; i < allUsers.length ; i++)
+      leaderboard.push(
+        <Box w="500px">
+          <Grid templateColumns="1fr 1fr">
+            <Text textAlign="center">{allUsers[i]}</Text>
+            <Text textAlign="center">{allScores[i]}</Text> 
+          </Grid>
+        </Box>)
+
+    return <VStack>
+      {leaderboard}
+    </VStack>
   }
+
+  async function axiosTest() {
+    try {
+      const {data:response} = await axios.get(url) //use data destructuring to get data from the promise object
+      return response
+    }
+
+    catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(() => {
+    const response = axiosTest()
+    // response.then(res => console.log(res.json()))
+  });
 
   return (
     <Box>
@@ -95,6 +105,7 @@ export default function Homepage() {
               Leaderboards
             </Text>
             
+            <Button onClick={() => console.log(allUsers)}>Show users</Button>
             {renderLeaderboard()}
           </VStack>
           </Box>

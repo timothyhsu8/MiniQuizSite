@@ -4,14 +4,23 @@ import { Button, Box, Center, VStack, Text, Input, Flex } from "@chakra-ui/react
 import { Link } from 'react-router-dom'
 
 function UserForm() {
-    const url = 'http://localhost:5000/posts';
+    const url = 'http://localhost:5000/users/create';
+    const url2 = 'http://localhost:5000/users';
 
     const [userData, setUserData] = useState({ name: '', score: 0 });
+    const [allUsers, setAllUsers] = useState([]);
     const createUser = (newUser) => {axios.post(url, newUser)}
-    const getUser = () => {axios.get(url)}
+    const getUser = (newUser) => {axios.get(url, newUser)}
 
-    const submitted = (newUser) => {
-      axios.post(url, newUser)  // Add new user to the database
+    const getAllUsers = () =>{
+      axios.get(url)
+      .then(res => {
+        console.log(res.data)
+        setAllUsers(res.data)
+      })
+      .catch(function (error) {
+          console.log(error);
+      })
     }
 
   return (
@@ -25,7 +34,7 @@ function UserForm() {
               <Button color="white" backgroundColor="blue.500" type="submit" onClick={() => createUser(userData)}
               _hover={{bgColor:"blue.300"}}>Submit</Button>
             </Link>
-            {/* <Button onClick={() => console.log(getUser)}>GET STUFF</Button> */}
+            {/* <Button bgColor="blue.200" onClick={() => getAllUsers()}>GET STUFF</Button> */}
           </VStack>
         </Flex>
       </Center>

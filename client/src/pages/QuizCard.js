@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Box, Center, Text, Grid, VStack, Button, Image, Badge, propNames} from "@chakra-ui/react"
-import test from '../images/App.png';
 import '../styles/homepage.css';
 
 function QuizCard(props) {
