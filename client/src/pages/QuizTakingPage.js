@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import axios from 'axios'
+import React, { useState, useEffect } from 'react'
 import { Box, Center, Text, Grid, VStack, Button, Image } from "@chakra-ui/react"
 import { useLocation, Link } from 'react-router-dom'
 
 export default function QuizTakingPage( {} ) {
     
     const location = useLocation()  // This passes state from a <Link>
+    const [currentUser, setCurrentUser] = useState(location.state?.username);
     const questions = location.state?.questions
     const answers = location.state?.answers
     const numQuestions = location.state?.numQuestions
@@ -17,8 +19,32 @@ export default function QuizTakingPage( {} ) {
     const answerColor = "purple.900"
     const hoverColor = "blue.700"
     const selectedColor = "yellow.500"
+    const [databaseUsers, setDatabaseUsers] = useState([])
+    const url = 'http://localhost:5000/users/create';
 
-    var quizComplete = false
+    useEffect(() => {
+        const response = getUsers()
+        response.then(res =>
+          setDatabaseUsers(res)
+           )
+      }, []);
+    
+      async function getUsers() {
+        try {
+          const {data:response} = await axios.get(url) 
+          return response
+        }
+    
+        catch (error) {
+          console.log(error);
+        }
+      }
+
+    function updateUser(){
+        let user = databaseUsers.find(element => element.name === currentUser)
+        let user_id = user._id
+        axios.patch(url + "/" + user_id, {name: user.name, score: user.score+numCorrect})
+    }
 
     const nextQuestion = () => {
         if(questionNum !== numQuestions){
@@ -35,7 +61,7 @@ export default function QuizTakingPage( {} ) {
             return <Button fontSize="24" w="450px" h="70px" bgColor="gray.300" _hover={{bgColor:"gray.300"}}>Next Question</Button>
         
         else if(questionNum === numQuestions)
-            return <Link w="50%" to="/homepage"> <Button fontSize="24" w="450px" h="70px" bgColor="blue.300" _hover={{bgColor:"green.200"}}>Finish Quiz</Button> </Link>
+            return <Link w="50%" to={{pathname: "/homepage", state:{ username:location.state?.username } }}> <Button onClick={() => updateUser()} fontSize="24" w="450px" h="70px" bgColor="blue.300" _hover={{bgColor:"green.200"}}>Finish Quiz</Button> </Link>
 
         else 
             return <Button fontSize="24" w="450px" h="70px" bgColor="green.300" onClick={() => nextQuestion()} _hover={{bgColor:"green.200"}}>Next Question</Button>
