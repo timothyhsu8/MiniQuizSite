@@ -5,6 +5,8 @@ import cors from 'cors';
 
 import quizRoutes from './routes/posts.js'
 
+const app = express();
+
 if (process.env.NODE_ENV === 'production') {
 	app.use(express.static('client/build'));
 }
@@ -12,8 +14,6 @@ if (process.env.NODE_ENV === 'production') {
 app.get('*', (request, response) => {
 	response.sendFile(path.join(__dirname, 'client/build', 'index.html'));
 });
-
-const app = express();
 
 app.use(bodyParser.json({limit: "30mb", extended: true}))
 app.use(bodyParser.urlencoded({limit: "30mb", extended: true}))
