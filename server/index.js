@@ -7,7 +7,7 @@ import { dirname } from 'path';
 import path from 'path'
 
 import quizRoutes from './routes/posts.js'
-
+ 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
