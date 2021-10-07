@@ -17,7 +17,7 @@ export default function Homepage() {
   var quiz1title = "Entertainment";
   var quiz2title = "Animals";
 
-  const url = 'http://localhost:5000/users/create';
+  const url = '/users/create';
 
   // Grabs user data from the database to populate the leaderboard
   useEffect(() => {

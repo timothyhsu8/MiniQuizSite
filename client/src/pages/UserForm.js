@@ -4,7 +4,7 @@ import { Button, Box, Center, VStack, Text, Input, Flex } from "@chakra-ui/react
 import { Link } from 'react-router-dom'
 
 function UserForm() {
-    const url = 'http://localhost:5000/users/create';
+    const url = '/users/create';
 
     const [databaseUsers, setDatabaseUsers] = useState([])
     const [userData, setUserData] = useState({ name: '', score: 0 });

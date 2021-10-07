@@ -20,7 +20,7 @@ export default function QuizTakingPage( {} ) {
     const hoverColor = "blue.700"
     const selectedColor = "yellow.500"
     const [databaseUsers, setDatabaseUsers] = useState([])
-    const url = 'http://localhost:5000/users/create';
+    const url = '/users/create';
 
     useEffect(() => {
         const response = getUsers()
